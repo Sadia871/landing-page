@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intrapreneur to Entrepreneur | Discover Your Entrepreneur Potential</title>
+    <style>
+        :root {
+            --primary: #d4af37;
+            --primary-dark: #b8971f;
+            --secondary: #333;
+            --light: #f5f5f5;
+            --dark: #222;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .question-container {
+            display: none;
+        }
+        
+        .question-container.active {
+            display: block;
+        }
+        
+        .question {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: var(--primary);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+        
+        .option.selected {
+            border-color: var(--primary);
+            background-color: rgba(212, 175, 55, 0.2);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .prev-btn {
+            background-color: #ddd;
+            color: var(--dark);
+        }
+        
+        .prev-btn:hover {
+            background-color: #ccc;
+        }
+        
+        .next-btn, .submit-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .next-btn:hover, .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .result-container {
+            display: none;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .interpretation {
+            margin-bottom: 2rem;
+        }
+        
+        .lead-form {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .submit-form-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-form-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .progress-container {
+            margin-bottom: 2rem;
+            background-color: #ddd;
+            border-radius: 10px;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 10px;
+            width: 10%;
+            transition: width 0.3s ease;
+        }
+        
+        .success-message {
+            display: none;
+            background-color: var(--success);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .quiz-container, .lead-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/api/placeholder/200/80" alt="Intrapreneur to Entrepreneur Logo" class="logo">
+        </div>
+        <h1>Intrapreneur to Entrepreneur</h1>
+        <p>Discover your entrepreneurial potential and receive a FREE guide to help you start your journey</p>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>Are You Ready to Transform Your Career?</h2>
+            <p>Take this quick 10-question assessment to discover your entrepreneurial readiness score and receive a personalized action plan to leverage your job skills into a thriving business.</p>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="question-container active" data-question="1">
+                <div class="question">1. How satisfied are you with your current career path?</div>
+                <div class="options">
+                    <div class="option" data-value="1">Very satisfied - I love my job and see myself staying long-term</div>
+                    <div class="option" data-value="2">Satisfied - My job is good, but I sometimes wonder about other opportunities</div>
+                    <div class="option" data-value="3">Neutral - My job pays the bills, but doesn't fulfill me</div>
+                    <div class="option" data-value="4">Unsatisfied - I'm actively looking for a change</div>
+                    <div class="option" data-value="5">Very unsatisfied - I'm desperate to leave my current position</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn" disabled>Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="2">
+                <div class="question">2. How often do you find yourself thinking about business ideas or side projects?</div>
+                <div class="options">
+                    <div class="option" data-value="1">Never - I'm focused solely on my job</div>
+                    <div class="option" data-value="2">Rarely - Maybe once or twice a year</div>
+                    <div class="option" data-value="3">Sometimes - Every few months</div>
+                    <div class="option" data-value="4">Often - Several times a month</div>
+                    <div class="option" data-value="5">Very often - Almost daily</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="3">
+                <div class="question">3. What specialized skills have you developed in your current job that could be valuable outside your company?</div>
+                <div class="options">
+                    <div class="option" data-value="1">None that I can think of</div>
+                    <div class="option" data-value="2">Basic skills that many people have</div>
+                    <div class="option" data-value="3">Some specialized skills, but they're industry-specific</div>
+                    <div class="option" data-value="4">Several valuable skills that could transfer to other contexts</div>
+                    <div class="option" data-value="5">Highly developed expertise that people would pay for</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="4">
+                <div class="question">4. How comfortable are you with taking calculated risks?</div>
+                <div class="options">
+                    <div class="option" data-value="1">Very uncomfortable - I prefer complete security</div>
+                    <div class="option" data-value="2">Somewhat uncomfortable - I take risks rarely</div>
+                    <div class="option" data-value="3">Neutral - I can take risks with proper planning</div>
+                    <div class="option" data-value="4">Comfortable - I'm willing to take calculated risks</div>
+                    <div class="option" data-value="5">Very comfortable - I embrace risk as part of growth</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="5">
+                <div class="question">5. Have you ever identified problems or inefficiencies at work that you wanted to solve differently?</div>
+                <div class="options">
+                    <div class="option" data-value="1">Never - I focus on doing my assigned tasks</div>
+                    <div class="option" data-value="2">Rarely - Once or twice</div>
+                    <div class="option" data-value="3">Sometimes - I occasionally notice issues</div>
+                    <div class="option" data-value="4">Often - I regularly spot problems and think about solutions</div>
+                    <div class="option" data-value="5">Very often - I'm constantly identifying better ways to do things</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="6">
+                <div class="question">6. How would you rate your ability to manage your time and stay self-motivated?</div>
+                <div class="options">
+                    <div class="option" data-value="1">Poor - I need structure and supervision</div>
+                    <div class="option" data-value="2">Fair - I can manage myself but get distracted</div>
+                    <div class="option" data-value="3">Average - I'm reasonably self-disciplined</div>
+                    <div class="option" data-value="4">Good - I'm effective at managing my time and priorities</div>
+                    <div class="option" data-value="5">Excellent - I'm highly self-motivated and disciplined</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="7">
+                <div class="question">7. Do you have a financial safety net or savings that could support you during a business transition?</div>
+                <div class="options">
+                    <div class="option" data-value="1">No savings at all</div>
+                    <div class="option" data-value="2">Less than 1 month of expenses</div>
+                    <div class="option" data-value="3">1-3 months of expenses saved</div>
+                    <div class="option" data-value="4">3-6 months of expenses saved</div>
+                    <div class="option" data-value="5">6+ months of expenses saved</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="8">
+                <div class="question">8. How do you handle setbacks and failures?</div>
+                <div class="options">
+                    <div class="option" data-value="1">I avoid situations where I might fail</div>
+                    <div class="option" data-value="2">I get discouraged easily and struggle to recover</div>
+                    <div class="option" data-value="3">I can eventually bounce back, but it's difficult</div>
+                    <div class="option" data-value="4">I see failures as learning opportunities</div>
+                    <div class="option" data-value="5">I actively embrace failures as essential stepping stones to success</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="9">
+                <div class="question">9. Do you have support from family/friends for pursuing entrepreneurial goals?</div>
+                <div class="options">
+                    <div class="option" data-value="1">No - They actively discourage me</div>
+                    <div class="option" data-value="2">Limited - They're skeptical but won't stop me</div>
+                    <div class="option" data-value="3">Neutral - They neither support nor discourage me</div>
+                    <div class="option" data-value="4">Supportive - They encourage my aspirations</div>
+                    <div class="option" data-value="5">Very supportive - They actively help me pursue my goals</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="question-container" data-question="10">
+                <div class="question">10. What's your timeline for transitioning from employee to entrepreneur?</div>
+                <div class="options">
+                    <div class="option" data-value="1">I have no plans to transition</div>
+                    <div class="option" data-value="2">Someday in the distant future (5+ years)</div>
+                    <div class="option" data-value="3">Within the next 2-5 years</div>
+                    <div class="option" data-value="4">Within the next 1-2 years</div>
+                    <div class="option" data-value="5">As soon as possible (within the next year)</div>
+                </div>
+                <div class="navigation">
+                    <button class="prev-btn">Previous</button>
+                    <button class="submit-btn">Submit</button>
+                </div>
+            </div>
+            
+            <div class="result-container">
+                <h2>Your Entrepreneur Readiness Score</h2>
+                <div class="score">0/50</div>
+                <div class="interpretation"></div>
+                <button class="get-guide-btn">Get Your FREE Guide!</button>
+            </div>
+        </div>
+        
+        <div class="lead-form">
+            <h2>Claim Your FREE Guide</h2>
+            <p>Enter your details below to receive your personalized "Intrapreneur to Entrepreneur Transition Guide" based on your score!</p>
+            
+            <form id="lead-capture-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="current-role">Current Job Role</label>
+                    <input type="text" id="current-role" name="current-role">
+                </div>
+                
+                <button type="submit" class="submit-form-btn">Send Me The Guide!</button>
+            </form>
+            
+            <div class="success-message">
+                Thank you! Your personalized guide is on its way to your inbox. Check your email in the next 5 minutes.
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Intrapreneur to Entrepreneur. All Rights Reserved.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questionContainers = document.querySelectorAll('.question-container');
+            const progressBar = document.getElementById('progress-bar');
+            const resultContainer = document.querySelector('.result-container');
+            const scoreElement = document.querySelector('.score');
+            const interpretationElement = document.querySelector('.interpretation');
+            const leadForm = document.querySelector('.lead-form');
+            const getGuideBtn = document.querySelector('.get-guide-btn');
+            const successMessage = document.querySelector('.success-message');
+            
+            let currentQuestion = 1;
+            let score = 0;
+            let answers = {};
+            
+            // Set up options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const container = this.closest('.question-container');
+                    container.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Navigation
+            document.querySelectorAll('.next-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const container = this.closest('.question-container');
+                    const selectedOption = container.querySelector('.option.selected');
+                    
+                    if (!selectedOption) {
+                        alert('Please select an answer before continuing.');
+                        return;
+                    }
+                    
+                    const questionNumber = parseInt(container.dataset.question);
+                    answers[questionNumber] = parseInt(selectedOption.dataset.value);
+                    
+                    container.classList.remove('active');
+                    const nextContainer = document.querySelector(`.question-container[data-question="${questionNumber + 1}"]`);
+                    nextContainer.classList.add('active');
+                    currentQuestion = questionNumber + 1;
+                    updateProgressBar();
+                });
+            });
+            
+            document.querySelectorAll('.prev-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const container = this.closest('.question-container');
+                    const questionNumber = parseInt(container.dataset.question);
+                    
+                    container.classList.remove('active');
+                    const prevContainer = document.querySelector(`.question-container[data-question="${questionNumber - 1}"]`);
+                    prevContainer.classList.add('active');
+                    currentQuestion = questionNumber - 1;
+                    updateProgressBar();
+                });
+            });
+            
+            // Submit button
+            document.querySelector('.submit-btn').addEventListener('click', function() {
+                const container = this.closest('.question-container');
+                const selectedOption = container.querySelector('.option.selected');
+                
+                if (!selectedOption) {
+                    alert('Please select an answer before submitting.');
+                    return;
+                }
+                
+                const questionNumber = parseInt(container.dataset.question);
+                answers[questionNumber] = parseInt(selectedOption.dataset.value);
+                
+                // Calculate score
+                score = Object.values(answers).reduce((acc, val) => acc + val, 0);
+                
+                // Display result
+                container.classList.remove('active');
+                resultContainer.style.display = 'block';
+                scoreElement.textContent = `${score}/50`;
+                
+                // Interpret score
+                let interpretation = '';
+                if (score <= 10) {
+                    interpretation = 'You\'re currently comfortable in your employee role, with limited interest in entrepreneurship at this time.';
+                } else if (score <= 20) {
+                    interpretation = 'You show some entrepreneurial curiosity. Consider exploring side projects while maintaining your job security.';
+                } else if (score <= 30) {
+                    interpretation = 'You have moderate entrepreneurial potential! It\'s time to start planning your transition while developing key skills.';
+                } else if (score <= 40) {
+                    interpretation = 'You have strong entrepreneurial readiness! You\'re well-positioned to start taking concrete steps toward business ownership.';
+                } else {
+                    interpretation = 'You\'re a natural entrepreneur! You appear ready to make the leap with the right strategy and support.';
+                }
+                
+                interpretationElement.textContent = interpretation;
+            });
+            
+            // Get guide button
+            getGuideBtn.addEventListener('click', function() {
+                resultContainer.style.display = 'none';
+                leadForm.style.display = 'block';
+            });
+            
+            // Lead form submission
+            document.getElementById('lead-capture-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real implementation, this would send the form data to your server
+                // For now, we'll just show the success message
+                this.style.display = 'none';
+                successMessage.style.display = 'block';
+            });
+            
+            function updateProgressBar() {
+                const progress = (currentQuestion / 10) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+        });
+    </script>
+</body>
+</html>
